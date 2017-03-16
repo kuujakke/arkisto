@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20170315113032) do
 
   create_table "images", force: :cascade do |t|
     t.string   "file"
-    t.string   "source"
+    t.string   "source_url"
     t.integer  "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
