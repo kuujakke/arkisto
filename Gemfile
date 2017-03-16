@@ -53,6 +53,7 @@ end
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'simplecov', require: false
 end
 
 group :production do
@@ -60,4 +61,4 @@ group :production do
 end
 
 # Coveralls
-gem 'coveralls', require: false
+gem 'coveralls', '0.8.19 ',require: false
