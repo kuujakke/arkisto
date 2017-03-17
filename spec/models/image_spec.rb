@@ -26,7 +26,7 @@ RSpec.describe Image, type: :model do
     end
     let(:webp) { FactoryGirl.create(:image_webp) }
     it "should support .webp" do
-      expect(webm).to be_valid
+      expect(webp).to be_valid
     end
   end
 end
