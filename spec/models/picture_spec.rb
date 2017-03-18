@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Image, type: :model do
+RSpec.describe Picture, type: :model do
   describe "with valid parameters" do
     let(:image) { FactoryGirl.create(:image) }
 
@@ -9,7 +9,7 @@ RSpec.describe Image, type: :model do
     end
   end
   describe "with invalid parameters" do
-    let(:image) { Image.create file: "asd.jiipeegee", source_url: "teh-inter.nets" }
+    let(:image) { Picture.create file: "asd.jiipeegee", source_url: "teh-inter.nets" }
 
     it "should not be saved" do
       expect(image).not_to be_valid

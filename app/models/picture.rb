@@ -1,4 +1,4 @@
-class Image < ApplicationRecord
+class Picture < ApplicationRecord
   validates :source_url,
             presence: true,
             format: {
