@@ -1,9 +1,9 @@
 FactoryGirl.define do
-  factory :image do
+  factory :picture do
     file "1489500739386.jpg"
     source_url "https://www.asd.net/foo/bar"
   end
-  factory :image_jpeg, class: Picture do
+  factory :picture_jpeg, class: Picture do
     file "1489500739386.jpg"
     source_url "https://www.asd.net/foo/bar"
   end
