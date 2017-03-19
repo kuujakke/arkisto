@@ -2,16 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Picture, type: :model do
   describe "with valid parameters" do
-    let(:picture) { FactoryGirl.create(:picture) }
+    let(:picture) { FactoryGirl.create(:picture, source_url: "https://asd.asd.com/1231.jpg") }
 
     it "should be saved" do
       expect(picture).to be_valid
     end
   end
   describe "with invalid parameters" do
-    let(:picture) { Picture.create file: "asd.jiipeegee", source_url: "teh-inter.nets" }
-
     it "should not be saved" do
+      picture = Picture.new file: fixture_file_upload(Rails.root.join('spec', 'pictures', 'test.jpeg'), 'image/jpeg')
+      picture.source_url = "asdafemgrogmro-.dfaefgpen//afegepnp/jplaw-.txt"
       expect(picture).not_to be_valid
     end
   end
