@@ -65,3 +65,5 @@ gem 'coveralls', '0.8.19 ',require: false
 
 # Add has_image -gem
 gem 'has_image'
+
+gem 'devise'
