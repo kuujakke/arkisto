@@ -26,3 +26,4 @@
 # Ruby version for rbenv
 .ruby-version
 coverage/.resultset.json
+app/assets/images/
