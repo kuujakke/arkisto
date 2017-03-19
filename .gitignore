@@ -26,4 +26,8 @@
 # Ruby version for rbenv
 .ruby-version
 coverage/.resultset.json
+<<<<<<< HEAD
 app/assets/images
+=======
+app/assets/images/
+>>>>>>> master
