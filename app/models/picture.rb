@@ -1,8 +1,6 @@
 class Picture < ApplicationRecord
-  has_image :resize_to => "640x480",
-            :thumbnails => {
-                :square => "200x200"
-            }
+  attr_accessible :file
+  has_attached_file :file, :styles => { :thumb => "200x200" }
   validates :source_url,
             presence: true,
             format: {
