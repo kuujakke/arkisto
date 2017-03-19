@@ -20,6 +20,14 @@ RSpec.describe Image, type: :model do
     it "should support .jpeg" do
       expect(jpeg).to be_valid
     end
+    let(:png) { FactoryGirl.create(:image_png) }
+    it "should support .png" do
+      expect(png).to be_valid
+    end
+    let(:webp) { FactoryGirl.create(:image_webp) }
+    it "should support .webp" do
+      expect(webp).to be_valid
+    end
   end
 end
 
