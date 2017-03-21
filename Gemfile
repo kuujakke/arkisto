@@ -40,6 +40,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  gem 'pry-rails'
+  gem 'better_errors'
 end
 
 group :development do
@@ -50,6 +52,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rails_layout'
+  gem 'binding_of_caller'
 end
 
 group :test do
@@ -69,3 +72,4 @@ gem 'paperclip'
 
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'haml'

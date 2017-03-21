@@ -1,0 +1,3 @@
+%h1 Images
+- @pictures.each do |picture|
+  = image_tag picture.file.url(:thumb)
