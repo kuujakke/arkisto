@@ -1,22 +1,11 @@
-class PicturesController < ApplicationController
-  def new
-    @picture = Picture.new
-  end
-
-  def index
-    @pictures = Picture.all
-  end
-
-  def show
-    @picture = Picture.find(params[:id])
-  end
+class PicturesController < InheritedResources::Base
+  respond_to :html
 
   def create
-    @picture = Picture.create(picture_params)
+    create!
   end
 
-  def picture_params
-    params.require(:picture).permit(:file, :source_url)
+  def permitted_params
+    params.require(:picture).permit(:file)
   end
-
 end

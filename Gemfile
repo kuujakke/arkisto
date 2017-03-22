@@ -74,3 +74,7 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'haml'
 gem 'activeadmin', github: 'activeadmin'
+# ActiveAdmin needs has_scope
+gem 'has_scope'
+# ActiveAdmin needs also responders
+gem 'responders'

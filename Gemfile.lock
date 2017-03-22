@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/activeadmin/activeadmin.git
-  revision: 9448c4488aa79891286fb010d8fe42844367becb
+  revision: 5b711b6e22230e6e28be2a9d7367e9423d5dcc25
   specs:
     activeadmin (1.0.0.pre5)
-      arbre (~> 1.0, >= 1.0.2)
+      arbre (>= 1.1.1)
       bourbon
       coffee-rails
       formtastic (~> 3.1)
@@ -310,6 +310,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   haml
+  has_scope
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
@@ -319,6 +320,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.2)
   rails_layout
+  responders
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   simplecov
