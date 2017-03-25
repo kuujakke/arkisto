@@ -39,7 +39,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  gem 'pg'
   gem 'pry-rails'
   gem 'better_errors'
 end
@@ -78,3 +78,5 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'has_scope'
 # ActiveAdmin needs also responders
 gem 'responders'
+# Add Phashion, the pHash library wrapper.
+gem 'phashion'

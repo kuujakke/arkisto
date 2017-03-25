@@ -2,6 +2,7 @@ ActiveAdmin.register Picture do
   menu priority: 1
   permit_params :file
   form html: {multipart: true} do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs "Upload" do
       f.input :file
     end
