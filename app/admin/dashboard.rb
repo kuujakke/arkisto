@@ -8,8 +8,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Pictures" do
           Picture.all.each do |picture|
-            a href: admin_picture_path(picture)
-            img src: picture.file.url(:tiny)
+            a link_to image_tag(picture.file.url(:tiny)), admin_picture_path(picture)
           end
         end
       end
@@ -19,8 +18,8 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Users" do
           ul do
-            User.all do |user|
-              a href: admin_user_path(user)
+            User.all.each do |user|
+              li link_to user.email, admin_admin_user_path(user)
             end
           end
         end

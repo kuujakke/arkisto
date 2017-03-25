@@ -8,8 +8,7 @@ ActiveAdmin.register Picture do
     f.actions
   end
   index as: :grid do |picture|
-    a href: admin_picture_path(picture)
-    img src: picture.file.url(:tiny)
+    link_to image_tag(picture.file.url(:tiny)), admin_picture_path(picture)
   end
   show do
     image_tag picture.file.url(:tiny)
