@@ -33,13 +33,14 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+# Postgresql database
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
   # Use sqlite3 as the database for Active Record
-  gem 'pg'
   gem 'pry-rails'
   gem 'better_errors'
 end
@@ -61,7 +62,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
 end
 
 # Coveralls
