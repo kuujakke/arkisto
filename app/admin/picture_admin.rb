@@ -8,7 +8,7 @@ ActiveAdmin.register Picture do
     f.actions
   end
   index as: :grid do |picture|
-    link_to image_tag(picture.file.url(:tiny)), admin_picture_path(picture)
+    link_to image_tag(picture.file.url(:thumbnail)), admin_picture_path(picture)
   end
   show do
     attributes_table do
@@ -17,6 +17,7 @@ ActiveAdmin.register Picture do
       row :rating
       row :file_file_size
       row :created_at
+      row :file_fingerprint
     end
     panel "Available sizes" do
       tabs do
