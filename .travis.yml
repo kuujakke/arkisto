@@ -1,6 +1,11 @@
 language: ruby
+services:
+ - postgresql
 rvm:
 - 2.4.0
+before_script:
+  - psql -c 'create database arkisto_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
 script:
 - bundle exec rake db:migrate --trace
 - RAILS_ENV=test bundle exec rake db:migrate --trace

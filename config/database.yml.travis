@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: arkisto_test
+  username: postgres
