@@ -11,7 +11,6 @@ RSpec.describe "pictures/index.html.haml", type: :view do
     it "should display many pictures" do
       visit pictures_path
       expect(page).to have_css('img', :count => 4)
-      save_and_open_page
     end
   end
 end
