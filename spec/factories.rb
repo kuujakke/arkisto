@@ -14,4 +14,8 @@ FactoryGirl.define do
     file { fixture_file_upload(Rails.root.join('spec', 'pictures', 'test.webp'), 'image/webp') }
     source_url "https://www.asd.net/foo/bar"
   end
+  factory :picture_gif, class: Picture do
+    file { fixture_file_upload(Rails.root.join('spec', 'pictures', 'test.gif'), 'image/gif') }
+    source_url "https://www.asd.net/foo/bar"
+  end
 end
