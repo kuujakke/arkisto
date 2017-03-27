@@ -3,6 +3,11 @@ services:
   - postgresql
 rvm:
   - 2.4.0
+
+addons:
+  apt:
+     packages:
+        - google-chrome-stable
 before_script:
   - export CHROME_BIN=/usr/bin/google-chrome
   - psql -c 'create database arkisto_test;' -U postgres
@@ -10,10 +15,6 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start
-  - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
 
 script:
   - bundle exec rake db:migrate --trace
