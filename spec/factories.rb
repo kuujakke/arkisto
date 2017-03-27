@@ -18,4 +18,15 @@ FactoryGirl.define do
     file { fixture_file_upload(Rails.root.join('spec', 'pictures', 'test.gif'), 'image/gif') }
     source_url "https://www.asd.net/foo/bar"
   end
+  factory :user, class: User do
+    email "user@example.com"
+    password "password"
+    password_confirmation "password"
+  end
+  factory :moderator, class: User do
+    email "admin@example.com"
+    password "password"
+    password_confirmation "password"
+    moderator true
+  end
 end
