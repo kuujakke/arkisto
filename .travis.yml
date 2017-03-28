@@ -22,6 +22,10 @@ addons:
       - webp
 
 before_install:
+# Install newer ImageMagick
+  - sudo add-apt-repository -y ppa:isage-dna/imagick
+  - sudo apt-get update
+  - sudo apt-get -y --reinstall install imagemagick
 # Install libwebp
   - export CORES=$(nproc)
   - echo "Using $CORES cores for compiling..."
