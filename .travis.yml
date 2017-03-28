@@ -20,7 +20,7 @@ addons:
       - libgif-dev
 env:
   global:
-    - IMAGEMAGICK_VERSION: '7.0.3-10'
+    - IMAGEMAGICK_VERSION: '7.0.5-4'
     - LIBWEBP_VERSION: '0.6.0'
 
 before_install:
