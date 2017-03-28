@@ -1,20 +1,20 @@
 example_id                                            | status  | run_time        |
 ----------------------------------------------------- | ------- | --------------- |
-./spec/controllers/pictures_controller_spec.rb[1:1:1] | passed  | 0.02051 seconds |
-./spec/features/picture_upload_spec.rb[1:1:1]         | passed  | 6.37 seconds    |
-./spec/features/picture_upload_spec.rb[1:2:1]         | passed  | 5.48 seconds    |
-./spec/features/user_moderator_spec.rb[1:1:1]         | failed  | 0.18733 seconds |
-./spec/features/user_moderator_spec.rb[1:1:2:1]       | failed  | 0.19549 seconds |
-./spec/features/user_moderator_spec.rb[1:1:2:2]       | failed  | 0.20368 seconds |
-./spec/features/user_moderator_spec.rb[1:2:1]         | failed  | 0.15825 seconds |
-./spec/features/user_moderator_spec.rb[1:2:2]         | failed  | 0.19527 seconds |
-./spec/helpers/users_helper_spec.rb[1:1]              | pending | 0.00003 seconds |
-./spec/models/picture_spec.rb[1:1:1]                  | passed  | 1.75 seconds    |
-./spec/models/picture_spec.rb[1:2:1]                  | passed  | 0.01159 seconds |
-./spec/models/picture_spec.rb[1:3:1]                  | passed  | 0.97384 seconds |
-./spec/models/picture_spec.rb[1:3:2]                  | passed  | 7.67 seconds    |
-./spec/models/picture_spec.rb[1:3:3]                  | passed  | 8.19 seconds    |
-./spec/models/user_spec.rb[1:1]                       | pending | 0.00003 seconds |
+./spec/controllers/pictures_controller_spec.rb[1:1:1] | passed  | 0.02182 seconds |
+./spec/features/picture_upload_spec.rb[1:1:1]         | passed  | 3.58 seconds    |
+./spec/features/picture_upload_spec.rb[1:2:1]         | passed  | 5.94 seconds    |
+./spec/features/user_moderator_spec.rb[1:1:1]         | passed  | 1.14 seconds    |
+./spec/features/user_moderator_spec.rb[1:1:2:1]       | passed  | 1.54 seconds    |
+./spec/features/user_moderator_spec.rb[1:1:2:2]       | passed  | 1.59 seconds    |
+./spec/features/user_moderator_spec.rb[1:2:1]         | passed  | 4.54 seconds    |
+./spec/features/user_moderator_spec.rb[1:2:2]         | passed  | 1.27 seconds    |
+./spec/helpers/users_helper_spec.rb[1:1]              | pending | 0.00001 seconds |
+./spec/models/picture_spec.rb[1:1:1]                  | passed  | 1.74 seconds    |
+./spec/models/picture_spec.rb[1:2:1]                  | passed  | 0.00991 seconds |
+./spec/models/picture_spec.rb[1:3:1]                  | passed  | 0.93194 seconds |
+./spec/models/picture_spec.rb[1:3:2]                  | passed  | 7.18 seconds    |
+./spec/models/picture_spec.rb[1:3:3]                  | passed  | 7.12 seconds    |
+./spec/models/user_spec.rb[1:1]                       | pending | 0.00002 seconds |
 ./spec/views/pictures/index.html.haml_spec.rb[1:1:1]  | failed  | 20.22 seconds   |
-./spec/views/users/index.html.erb_spec.rb[1:1]        | pending | 0.00004 seconds |
+./spec/views/users/index.html.erb_spec.rb[1:1]        | pending | 0.00001 seconds |
 ./spec/views/users/show.html.erb_spec.rb[1:1]         | pending | 0.00001 seconds |

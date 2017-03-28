@@ -1,3 +1,4 @@
+include ActionDispatch::TestProcess
 FactoryGirl.define do
   factory :picture do
     file { fixture_file_upload(Rails.root.join('spec', 'pictures', 'test.jpg'), 'image/jpg') }
