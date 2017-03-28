@@ -19,6 +19,7 @@ addons:
       - libpng-dev
       - libgif-dev
       - imagemagick
+      - webp
 
 before_install:
 # Install libwebp
