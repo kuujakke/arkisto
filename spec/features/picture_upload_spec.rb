@@ -19,7 +19,7 @@ RSpec.feature "Picture upload", :type => :feature do
       expect(page).to have_content "test.jpeg"
     end
   end
-  feature "with existing picture file" do
+  feature "with identical picture file" do
     scenario "should not be uploaded" do
       upload_test_jpeg
       first("#pictures").click_link("Pictures")
@@ -28,25 +28,25 @@ RSpec.feature "Picture upload", :type => :feature do
       expect(page).to have_content "File fingerprint is not unique!"
     end
   end
-  feature "with similar picture file" do
-    background do
-      upload_test_jpeg
-      first("#pictures").click_link("Pictures")
-    end
-    scenario "should not upload blurred file" do
-      upload_blurred_test_jpeg
-      expect(page).not_to have_content "Picture was successfully created."
-      expect(page).to have_content "File fingerprint is not unique!"
-    end
-    scenario "should not upload horizontally flipped file" do
-      upload_horizontally_flipped_file
-      expect(page).not_to have_content "Picture was successfully created."
-      expect(page).to have_content "File fingerprint is not unique!"
-    end
-    scenario "should not upload vertically flipped file" do
-      upload_vertically_flipped_file
-      expect(page).not_to have_content "Picture was successfully created."
-      expect(page).to have_content "File fingerprint is not unique!"
-    end
-  end
+  #feature "with similar picture file" do
+   # background do
+    #  upload_test_jpeg
+     # first("#pictures").click_link("Pictures")
+    #end
+    # scenario "should not upload blurred file" do
+    #   upload_blurred_test_jpeg
+    #   expect(page).not_to have_content "Picture was successfully created."
+    #   expect(page).to have_content "File fingerprint is not unique!"
+    # end
+    # scenario "should not upload horizontally flipped file" do
+    #   upload_horizontally_flipped_file
+    #   expect(page).not_to have_content "Picture was successfully created."
+    #   expect(page).to have_content "File fingerprint is not unique!"
+    # end
+    # scenario "should not upload vertically flipped file" do
+    #   upload_vertically_flipped_file
+    #   expect(page).not_to have_content "Picture was successfully created."
+    #   expect(page).to have_content "File fingerprint is not unique!"
+    # end
+  #end
 end
