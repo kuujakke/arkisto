@@ -25,22 +25,22 @@ before_install:
   - export PATH=$HOME/opt/bin:$PATH
 # Checks if Imagemagick is already sufficient version
 # If not installs it from the sources
-  - export CORES=$(nproc) &&
-  - echo "Using $CORES cores for compiling..." &&
-  - cd /tmp &&
-  - curl -O https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz &&
-  - tar xvzf libwebp-0.6.0.tar.gz &&
-  - cd libwebp-* &&
-  - ./configure --prefix=$HOME/opt &&
-  - make -j$CORES &&
-  - make install -j$CORES &&
-  - cd /tmp &&
-  - curl -O https://www.imagemagick.org/download/ImageMagick-7.0.5-4.tar.gz &&
-  - tar xvzf ImageMagick-7.0.5-4.tar.gz &&
-  - cd ImageMagick-* &&
-  - ./configure --prefix=$HOME/opt &&
-  - make -j$CORES &&
-  - make install -j$CORES &&
+  - export CORES=$(nproc)
+  - echo "Using $CORES cores for compiling..."
+  - cd /tmp
+  - curl -O https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz
+  - tar xvzf libwebp-0.6.0.tar.gz
+  - cd libwebp-*
+  - ./configure --prefix=$HOME/opt
+  - make -j$CORES
+  - make install -j$CORES
+  - cd /tmp
+  - curl -O https://www.imagemagick.org/download/ImageMagick-7.0.5-4.tar.gz
+  - tar xvzf ImageMagick-7.0.5-4.tar.gz
+  - cd ImageMagick-*
+  - ./configure --prefix=$HOME/opt
+  - make -j$CORES
+  - make install -j$CORES
   - cd $TRAVIS_BUILD_DIR
 # Update library paths for programs
   - export LD_FLAGS=-L$HOME/opt/lib
