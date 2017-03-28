@@ -1,16 +1,21 @@
-sudo: false
-
 language: ruby
-services:
-  - postgresql
 rvm:
   - 2.4.0
+services:
+  - postgresql
 
+
+sudo: required
 addons:
-  apt:
-     packages:
-        - google-chrome-stable
+  packages:
+     - unzip
+     - google-chrome-stable
+
 before_script:
+  - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - sudo chmod u+x chromedriver
+  - sudo mv chromedriver /usr/bin/
   - export CHROME_BIN=/usr/bin/google-chrome
   - psql -c 'create database arkisto_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
@@ -34,6 +39,7 @@ env:
   global:
     secure: U5YASX+QWbHXOzhpavQ/iDo7CwuYb+CiLW3G80H+gb+2oBdhcjrI5dd7qVW6hwLj3AXkBLpXYuWZxldjdZjumQBe1qxruEWSk8FwUoD/VVuWPkjRGbCC5uYiimEP3Cyl2ouIrChSky+z8PuEk64QWPz9gWokc9febGW5KFCElCtSpm8ImNznN0mZbqiv8BkyEhA0AKtbnbzHFAPEeE886hKK7g8nT1r4SCgtA3zIinDuy0oyFVCjlM1/ZcDj3iBBfhIlOEqOw3z1MRDoM2RpqyQViWg4y1Y0XHKZmsYiW9cmftWceJfyBZ3SGHx83NItTDdll5VA9gj1OQHyH+bSWF+VQlvnm5bs2RiXn7dOh1yfoLT1leNDABfMDxkftBdw/E76WeVEuLrICRoUcH66uOqwn5Ietu1oSMpAEDIYlf4NfgslJw77N90+8ateN2RbhNb+iHHfsZKzAxtT59o6DmZqBXSBUjw87s7cZNuqpPNqTGQ4++TjoS7d6vZWJXxzaDK0eQCR0Fr46C6VX/VFIw0iI+HgRNXfUfs50dh1mxblY900AZjBAQ/M7KA1XqIr3vK913gJ/LQoQvoanXiN8cl6eEqXG7u4gH8EIhlcMl9Wr1k8Sz5Ps5D1mNGqKtJXxHO6zK1ESAyt/hUBv6b2sgexm6TZZJ9g8GwZzl55cKs=
 after_success:
+  - coveralls
   - curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge
   - chmod a+x /tmp/travis-automerge
   - BRANCHES_TO_MERGE_REGEX='^.*' BRANCH_TO_MERGE_INTO=master GITHUB_REPO=kuujakke/arkisto /tmp/travis-automerge
