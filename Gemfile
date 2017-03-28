@@ -18,7 +18,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'coveralls', '0.8.19 ',require: false
-gem 'paperclip'
+gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'haml'
