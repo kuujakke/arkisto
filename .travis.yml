@@ -29,6 +29,8 @@ before_install:
   - export PATH=$HOME/opt/bin:$PATH
 # Checks if Imagemagick is already sufficient version
 # If not installs it from the sources
+  - echo https://www.imagemagick.org/download/ImageMagick-$IMAGEMAGICK_VERSION.tar.gz
+  - echo https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$LIBWEBP_VERSION.tar.gz
   - convert -version | grep $IMAGEMAGICK_VERSION || {
     export CORES=$(nproc) &&
     echo "Using $CORES cores for compiling..." &&
