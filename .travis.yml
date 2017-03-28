@@ -11,18 +11,57 @@ addons:
     packages:
       - google-chrome-stable
       - unzip
-      - libwebp
-before_script:
-  - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
-  - sudo chmod u+x chromedriver
-  - sudo mv chromedriver /usr/bin/
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - psql -c 'create database arkisto_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3 # give xvfb some time to start
+      - libjpeg-dev
+      - libpng-dev
+      - libgif-dev
+env:
+  global:
+    - IMAGEMAGICK_VERSION: '7.0.3-10'
+    - LIBWEBP_VERSION: '0.5.1'
+
+# Install newer libwebp and imagemagick
+before_install:
+# Update PATH so that travis can find newer imagemagick
+  - export PATH=$HOME/opt/bin:$PATH
+
+# Checks if Imagemagick is already sufficient version
+# If not installs it from the sources
+  - convert -version | grep $IMAGEMAGICK_VERSION || {
+    export CORES=$(nproc) &&
+    echo "Using $CORES cores for compiling..." &&
+    cd /tmp &&
+    curl -O https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$LIBWEBP_VERSION.tar.gz &&
+    tar xvzf libwebp-$LIBWEBP_VERSION.tar.gz &&
+    cd libwebp-* &&
+    ./configure --prefix=$HOME/opt &&
+    make -j$CORES &&
+    make install -j$CORES &&
+    cd /tmp &&
+    curl -O https://www.imagemagick.org/download/ImageMagick-$IMAGEMAGICK_VERSION.tar.gz &&
+    tar xvzf ImageMagick-$IMAGEMAGICK_VERSION.tar.gz &&
+    cd ImageMagick-* &&
+    ./configure --prefix=$HOME/opt &&
+    make -j$CORES &&
+    make install -j$CORES &&
+    $HOME/opt/bin/magick -version | grep $IMAGEMAGICK_VERSION &&
+    cd $TRAVIS_BUILD_DIR; }
+# Update library paths for programs
+    - export LD_FLAGS=-L$HOME/opt/lib
+    - export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:$HOME/opt/lib
+    - export CPATH=$CPATH:$HOME/opt/include
+# Install chromedriver
+    - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
+    - unzip chromedriver_linux64.zip
+    - sudo chmod u+x chromedriver
+    - sudo mv chromedriver /usr/bin/
+    - export CHROME_BIN=/usr/bin/google-chrome
+# Create test database in PostgreSQL
+    - psql -c 'create database arkisto_test;' -U postgres
+    - cp config/database.yml.travis config/database.yml
+# Start xvfb for headless browser testing
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - sleep 3 # give xvfb some time to start
 
 script:
   - bundle exec rake db:migrate --trace
