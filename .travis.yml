@@ -6,6 +6,10 @@ services:
 
 sudo: required
 dist: trusty
+cache:
+  directories:
+    - "$HOME/opt"
+
 addons:
   apt:
     packages:
@@ -17,7 +21,7 @@ addons:
 env:
   global:
     - IMAGEMAGICK_VERSION: '7.0.3-10'
-    - LIBWEBP_VERSION: '0.5.1'
+    - LIBWEBP_VERSION: '0.6.0'
 
 before_install:
 # Install newer libwebp and imagemagick,
