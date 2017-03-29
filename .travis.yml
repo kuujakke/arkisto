@@ -81,6 +81,7 @@ after_success:
   - curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge
   - chmod a+x /tmp/travis-automerge
   - BRANCHES_TO_MERGE_REGEX='^.*' BRANCH_TO_MERGE_INTO=master GITHUB_REPO=kuujakke/arkisto /tmp/travis-automerge
+  - bundle exec codeclimate-test-reporter
 
 notifications:
   slack:

@@ -52,6 +52,7 @@ group :test do
   gem 'webmock'
   gem 'selenium-webdriver', '3.3.0'
   gem 'chromedriver-helper'
+  gem 'codeclimate-test-reporter', '~> 1.0.0'
 end
 
 group :production do
