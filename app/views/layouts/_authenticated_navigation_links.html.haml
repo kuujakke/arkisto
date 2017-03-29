@@ -5,6 +5,9 @@
         = current_user.email
         %span.caret
       %ul.dropdown-menu{:role => "menu"}
+        - if current_user.moderator?
+          %li
+            = link_to 'Moderator', admin_root_path
         %li
           = link_to 'Account', edit_user_registration_path
         %li.divider

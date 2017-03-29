@@ -1,31 +1,82 @@
 language: ruby
-services:
- - postgresql
 rvm:
-- 2.4.0
-before_script:
+  - 2.4.0
+services:
+  - postgresql
+
+sudo: required
+dist: trusty
+cache:
+  directories:
+    - "$HOME/opt"
+
+addons:
+  apt:
+    packages:
+      - google-chrome-stable
+      - unzip
+      - libjpeg-dev
+      - libpng-dev
+      - libgif-dev
+      - imagemagick
+      - webp
+
+before_install:
+# Install libwebp
+  - export CORES=$(nproc)
+  - echo "Using $CORES cores for compiling..."
+  - cd /tmp
+  - curl -O https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz
+  - tar xvzf libwebp-0.6.0.tar.gz
+  - cd libwebp-*
+  - ./configure --prefix=$HOME/opt
+  - make -j$CORES
+  - make install -j$CORES
+  - cd $TRAVIS_BUILD_DIR
+# Update library paths for programs
+  - export LD_FLAGS=-L$HOME/opt/lib
+  - export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:$HOME/opt/lib
+  - export CPATH=$CPATH:$HOME/opt/include
+# Install chromedriver
+  - wget http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - sudo chmod u+x chromedriver
+  - sudo mv chromedriver /usr/bin/
+  - export CHROME_BIN=/usr/bin/google-chrome
+# Create test database in PostgreSQL
   - psql -c 'create database arkisto_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+# Start xvfb for headless browser testing
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
+# Reinstall newer ImageMagick
+  - sudo add-apt-repository -y ppa:isage-dna/imagick
+  - sudo apt-get update
+  - sudo apt-get -y --reinstall install -f imagemagick
+# Print ImageMagick version information:
+  - convert -version
+
 script:
-- bundle exec rake db:migrate --trace
-- RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake db:test:prepare
-- bundle exec rspec -fd spec/
+  - bundle exec rake db:migrate --trace
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec -fd spec/
 deploy:
   provider: heroku
-  api_key:
-    secure: sTz7v+fzNh6+F/PjNKcXfNHUohPv22Rr2pFBQPL44HvjkJDaYPGaYyWikTj7yLa7/QyQvp3ehtj+o46Qv6YvifXZG7f02jZAMhh1WMCatD30hGp+7MOM9qwT4ergHJWGMxXmTuZI47kK6mV8CP4uGi2elZl5eouNdCFiJGdurf1setjFVIuNObAwVIRfYrmwPM3S62sMUPyLnb0dou+dRvIEjjnPZc0soAAtCqc2u0z2AMds5Fe6LE9abI/OQhlvoXVwNqooQGvlsU38N8Qi56wWqY5OHTz/4LETCEb7A+6Ccy3Agdm0y7LUxrDM/lopyxq8896vS2zRA8PAMd/fzwm7yENx1BU9DMuwUOCsdy99AGyU2pAU5IQ3O0dDOp3cZgOFoWF64md4lcNP1LNLVfhZP3FHVeO2yqzE+SVBIPcJqTV9as7DrPXq0ShUwE8U0mqagHNyddT7x0dwzrihCa2W7pXT7XpYaZNuhSFYUXB8MDTLFoOnpwu/5uPvd6s2J1b2MEIKh8NTHX3L2R1M43BVHM/AjeeKFNOXvayAa1Z2DdEvOX2z0FsGD4O+x4I3fARSBujneXlSw3B35d8W0mEcHMyHzecZFHJCqEnGSl52TFWNTUTV+vsfgkH6m5lDKdpjYGnW0RjSbyvTg4RdKFsqhaKnaaUamJIbJoIMqHY=
   app: arkisto
   on:
     repo: kuujakke/arkisto
+  api_key:
+    secure: sTz7v+fzNh6+F/PjNKcXfNHUohPv22Rr2pFBQPL44HvjkJDaYPGaYyWikTj7yLa7/QyQvp3ehtj+o46Qv6YvifXZG7f02jZAMhh1WMCatD30hGp+7MOM9qwT4ergHJWGMxXmTuZI47kK6mV8CP4uGi2elZl5eouNdCFiJGdurf1setjFVIuNObAwVIRfYrmwPM3S62sMUPyLnb0dou+dRvIEjjnPZc0soAAtCqc2u0z2AMds5Fe6LE9abI/OQhlvoXVwNqooQGvlsU38N8Qi56wWqY5OHTz/4LETCEb7A+6Ccy3Agdm0y7LUxrDM/lopyxq8896vS2zRA8PAMd/fzwm7yENx1BU9DMuwUOCsdy99AGyU2pAU5IQ3O0dDOp3cZgOFoWF64md4lcNP1LNLVfhZP3FHVeO2yqzE+SVBIPcJqTV9as7DrPXq0ShUwE8U0mqagHNyddT7x0dwzrihCa2W7pXT7XpYaZNuhSFYUXB8MDTLFoOnpwu/5uPvd6s2J1b2MEIKh8NTHX3L2R1M43BVHM/AjeeKFNOXvayAa1Z2DdEvOX2z0FsGD4O+x4I3fARSBujneXlSw3B35d8W0mEcHMyHzecZFHJCqEnGSl52TFWNTUTV+vsfgkH6m5lDKdpjYGnW0RjSbyvTg4RdKFsqhaKnaaUamJIbJoIMqHY=
 env:
   global:
     secure: U5YASX+QWbHXOzhpavQ/iDo7CwuYb+CiLW3G80H+gb+2oBdhcjrI5dd7qVW6hwLj3AXkBLpXYuWZxldjdZjumQBe1qxruEWSk8FwUoD/VVuWPkjRGbCC5uYiimEP3Cyl2ouIrChSky+z8PuEk64QWPz9gWokc9febGW5KFCElCtSpm8ImNznN0mZbqiv8BkyEhA0AKtbnbzHFAPEeE886hKK7g8nT1r4SCgtA3zIinDuy0oyFVCjlM1/ZcDj3iBBfhIlOEqOw3z1MRDoM2RpqyQViWg4y1Y0XHKZmsYiW9cmftWceJfyBZ3SGHx83NItTDdll5VA9gj1OQHyH+bSWF+VQlvnm5bs2RiXn7dOh1yfoLT1leNDABfMDxkftBdw/E76WeVEuLrICRoUcH66uOqwn5Ietu1oSMpAEDIYlf4NfgslJw77N90+8ateN2RbhNb+iHHfsZKzAxtT59o6DmZqBXSBUjw87s7cZNuqpPNqTGQ4++TjoS7d6vZWJXxzaDK0eQCR0Fr46C6VX/VFIw0iI+HgRNXfUfs50dh1mxblY900AZjBAQ/M7KA1XqIr3vK913gJ/LQoQvoanXiN8cl6eEqXG7u4gH8EIhlcMl9Wr1k8Sz5Ps5D1mNGqKtJXxHO6zK1ESAyt/hUBv6b2sgexm6TZZJ9g8GwZzl55cKs=
 after_success:
-- curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge
-- chmod a+x /tmp/travis-automerge
-- BRANCHES_TO_MERGE_REGEX='^.*' BRANCH_TO_MERGE_INTO=master GITHUB_REPO=kuujakke/arkisto
-  /tmp/travis-automerge
+  - coveralls
+  - curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge
+  - chmod a+x /tmp/travis-automerge
+  - BRANCHES_TO_MERGE_REGEX='^.*' BRANCH_TO_MERGE_INTO=master GITHUB_REPO=kuujakke/arkisto /tmp/travis-automerge
 notifications:
   slack:
     secure: ZFIvW2wBMS1CmoicRFRqVOWwXRSzUlL28vtFibYMKUmptmXwgdlMxfmMEmhHFP2pfA/5F9xlCrEeGZ4epYnCv8SkRr+KyiNkDNrMyuBfFf55dnOqpP8EjVXCQ7eyKBOe3RILjttPu3FEewfb0XmmP9C0X5yDWdgNybWehtYc2Z9P+DVY7Du/CtOjphKqhs77y+n07Z7SH/XTAHBocQeWieyh2NUgD31PRB3b5C+GOBAzT9zoE+2TwspeUMGIH6OjYtcLLFvJpUKwXEO1oUkPvG1YkCfUgPP151pRQ2mKkSg51PWLWQlrJxpXzSjQjyktaJdIA37qhkYx028ttszXvk/CRQ97xrc6yihLb1zpPikXxAwVrRlf2isM4pWGo1TQVKCSjM9Zw74KsjK4sfSCKBLKwQ43YoUqrauwd0QqCJsE44QOK2va4guuI+C2tiZ0AHTgaTa3jYtej/l6xStygBAePUgF7lsNh0MN4diP7/0u2zjiVdn9B63Q7Sntx/VNc0pLHY19fco53OldmX/th3YRzDsNC2YzutY1pdUGgQtImXlZ/08lM7lk4KGqk/KfDFesgZIu3aEeMyOItcpW937Tj2nKBz+ZV1c/omqMQIZjM6kEZNi63mdGEuvRgfWJOOm3WGzQZLke9eUFv2AgmlfdpCG7xygWL+5RYUZ8ALk=

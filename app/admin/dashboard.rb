@@ -19,7 +19,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recent Users" do
           ul do
             User.all.each do |user|
-              li link_to user.email, admin_admin_user_path(user)
+              li link_to user.email, admin_user_path(user)
             end
           end
         end
