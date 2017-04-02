@@ -59,6 +59,16 @@ before_install:
 # Print ImageMagick version information:
   - convert -version
 
+# Install pg_similarity dependencies
+before_script:
+  - sudo apt-get install postgresql-server-dev-all
+  - sudo apt-get install postgresql-common
+  - git clone https://github.com/eulerto/pg_similarity.git
+  - cd pg_similarity
+  - USE_PGXS=1 make
+  - USE_PGXS=1 make install
+  - psql -c "CREATE EXTENSION pg_similarity;"
+
 script:
   - bundle exec rake db:migrate --trace
   - RAILS_ENV=test bundle exec rake db:migrate --trace
