@@ -11,6 +11,7 @@ cache:
     - "$HOME/opt"
 
 addons:
+  postgresql: "9.6"
   code_climate:
     repo_token: ae500ad2eb6a0a108dfbb5ec653cc08bc515738d78d8303a9fbe7f430d58d47a
   apt:
@@ -58,6 +59,18 @@ before_install:
   - sudo apt-get -y --reinstall install -f imagemagick
 # Print ImageMagick version information:
   - convert -version
+
+# Install pg_similarity dependencies
+before_script:
+  - sudo apt-get install postgresql-server-dev-all
+  - sudo apt-get install postgresql-common
+  - cd /tmp
+  - git clone https://github.com/eulerto/pg_similarity.git
+  - cd pg_similarity
+  - USE_PGXS=1 make
+  - USE_PGXS=1 sudo make install
+  - psql -c 'CREATE EXTENSION pg_similarity;' -U postgres
+  - cd $TRAVIS_BUILD_DIR
 
 script:
   - bundle exec rake db:migrate --trace
