@@ -67,7 +67,7 @@ before_script:
   - cd pg_similarity
   - USE_PGXS=1 make
   - USE_PGXS=1 sudo make install
-  - psql -c "CREATE EXTENSION pg_similarity;"
+  - psql -c 'CREATE EXTENSION pg_similarity;' -U postgres
 
 script:
   - bundle exec rake db:migrate --trace
