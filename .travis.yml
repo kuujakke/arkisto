@@ -11,6 +11,7 @@ cache:
     - "$HOME/opt"
 
 addons:
+  postgresql: "9.4"
   code_climate:
     repo_token: ae500ad2eb6a0a108dfbb5ec653cc08bc515738d78d8303a9fbe7f430d58d47a
   apt:
