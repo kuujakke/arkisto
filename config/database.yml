@@ -3,17 +3,19 @@ default: &default
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: pguser
-  password: password
+  host: <%= ENV['POSTGRES_HOST'] %>
+  port: <%= ENV['POSTGRES_PORT'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 development:
   <<: *default
-  database: arkisto_development
+  database: <%= ENV['APP_NAME'] %>_development
 
 test:
   <<: *default
-  database: arkisto_test
+  database: <%= ENV['APP_NAME'] %>_test
 
 production:
   <<: *default
-  database: arkisto_production
+  database: <%= ENV['APP_NAME'] %>_production

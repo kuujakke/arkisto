@@ -1,0 +1,9 @@
+FROM jwilder/nginx-proxy:alpine
+
+ENV RAILS_ROOT /var/www/arkisto
+
+WORKDIR $RAILS_ROOT
+
+RUN mkdir log
+
+COPY public public/
