@@ -29,3 +29,12 @@ coverage/.resultset.json
 app/assets/images/
 /public/system/
 coverage/
+
+# Docker environment variables
+.env
+.arkisto_env
+
+.dockerignore
+Dockerfile
+aws.ovpn
+docker-compose.yml
