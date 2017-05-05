@@ -1,0 +1,49 @@
+stack: kuujakke/arkisto:latest
+version: 0.0.1
+
+services:
+  db:
+    image: arkisto-db:latest
+    build:
+      context: .
+      dockerfile: config/containers/Dockerfile-postgres
+
+  app:
+    image: arkisto-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  web:
+    image: jwilder/nginx-proxy:alpine
+    links:
+      - app
+      - redis
+
+  redis:
+    image: redis/alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - arkisto_redis:/var/lib/redis/data
+
+  sidekiq:
+    image: arkisto-sidekiq
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    links:
+      - db
+      - redis
+    volumes:
+      - arkisto_app:/arkisto
+
+volumes:
+  arkisto_app:
+    external:
+      name: app
+  arkisto_redis:
+    external:
+      name: redis
+  arkisto_db:
+    external:
+      name: db
