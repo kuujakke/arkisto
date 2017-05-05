@@ -35,6 +35,4 @@ coverage/
 .arkisto_env
 
 .dockerignore
-Dockerfile
 aws.ovpn
-docker-compose.yml
