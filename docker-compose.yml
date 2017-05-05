@@ -1,0 +1,66 @@
+version: "3"
+services:
+  db:
+    build:
+      context: .
+      dockerfile: config/containers/Dockerfile-postgres
+
+    volumes:
+      - arkisto_db:/var/lib/postgresql/data
+
+  app:
+    build: .
+    env_file: arkisto.env
+    links:
+      - db
+      - redis
+    volumes:
+      - arkisto_app:/arkisto
+    expose:
+      - "3000"
+    depends_on:
+      - db
+      - sidekiq
+      - redis
+    environment:
+      - VIRTUAL_HOST=arkisto.local
+      - VIRTUAL_PORT=8080
+
+  web:
+    image: jwilder/nginx-proxy:alpine
+#      dockerfile: config/containers/Dockerfile-nginx
+    container_name: nginx-proxy
+    links:
+      - app
+      - redis
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - arkisto_app:/arkisto
+    depends_on:
+      - app
+    environment:
+      - DEFAULT_HOST=arkisto.local
+
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - arkisto_redis:/var/lib/redis/data
+
+  sidekiq:
+    build: .
+    env_file: arkisto.env
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    links:
+      - db
+      - redis
+    volumes:
+      - arkisto_app:/arkisto
+
+volumes:
+  arkisto_app:
+  arkisto_redis:
+  arkisto_db:
