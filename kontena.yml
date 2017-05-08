@@ -1,6 +1,5 @@
-stack: kuujakke/arkisto:latest
-version: 0.0.1
-
+stack: kuujakke/arkisto
+version: 0.0.2
 services:
   db:
     image: arkisto-db:latest
@@ -28,7 +27,7 @@ services:
       - arkisto_redis:/var/lib/redis/data
 
   sidekiq:
-    image: arkisto-sidekiq
+    image: arkisto-sidekiq:latest
     build: .
     command: bundle exec sidekiq -C config/sidekiq.yml
     links:
