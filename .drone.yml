@@ -1,0 +1,9 @@
+pipeline:
+  build:
+    image: app
+    commands:
+      - rspec -fd spec/
+
+services:
+  database:
+    image: db
