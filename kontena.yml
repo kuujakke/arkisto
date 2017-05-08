@@ -1,5 +1,7 @@
-stack: kuujakke/arkisto
-version: 0.0.2
+stack:
+ - kuujakke/arkisto
+version:
+ - 0.0.2
 services:
   db:
     image: arkisto-db:latest
