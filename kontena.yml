@@ -1,5 +1,5 @@
-stack: kuujakke/arkisto
-version: "3"
+stack: arkisto
+version: 0.0.2
 services:
   web:
       image: jwilder/nginx-proxy:alpine

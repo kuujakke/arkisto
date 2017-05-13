@@ -1,6 +1,6 @@
-FROM onjin/alpine-postgres:latest
+FROM postgres:alpine
 
-RUN apk add --no-cache git build-base && \
+RUN apk -Uuv add --no-cache git build-base && \
     cd /usr/local && \
     git clone https://github.com/eulerto/pg_similarity.git && \
     cd pg_similarity && \
